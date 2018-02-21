@@ -1,0 +1,12 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  text-align: center;
+  background: radial-gradient(purple, black);
+}
+
+h1 {
+  color: #EC5D2A;
+}
