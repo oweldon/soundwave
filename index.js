@@ -1,36 +1,29 @@
 var mic;
+var fft;
 var volhistory = [];
+var w;
 
  function setup() {
-   createCanvas(500, 500);
+   createCanvas(512, 512);
+   colorMode(HSB);
    angleMode(DEGREES);
    mic = new p5.AudioIn();
    mic.start();
+   fft = new p5.FFT(0.9, 64);
+   fft.setInput(mic);
+   w = width / 64;
  }
 
  function draw() {
    background(0);
-   var vol = mic.getLevel();
-   volhistory.push(vol);
+   var spectrum = fft.analyze();
+   noStroke();
+   for(var i = 0; i < spectrum.length; i++){
+     var amp = spectrum[i];
+     var y = map(amp, 0, 256, height, 0);
+     fill(i, 255, 255);
+     rect(i*w, y, w - 2 , height - y);
+   }
    stroke(255);
    noFill();
-
-   translate(width / 2, height / 2);
-   beginShape();
-   for(var i = 0; i < 360; i++){
-     var r = map(volhistory[i], 0, 1, 10, 100);
-     var x = r * cos(i);
-     var y = r * sin(i);
-     // var y = map(volhistory[i], 0, 1, height/2, 0);
-     vertex(x, y);
-   }
-   endShape();
-
-   if(volhistory.length > 360){
-     volhistory.splice(0, 1);
-   }
-
-   var diam = map(vol, 0, 0.3, 10, 200);
-   fill(255, 0, 255);
-   // ellipse(width / 2, height / 2, diam, diam);
  }
