@@ -55,26 +55,37 @@ function draw() {
     ellipse(width / 2, height / 2, 20 + rms * (height / 2), 20 + rms * (height / 2));
 
     var bass = fft.getEnergy('lowMid');
-    console.log(bass)
     if(bass < 400){
       stroke(1);
       fill('white');
       beginShape();
       ellipse(width / 2, height / 2, bass/150 * (height / 2), bass/150 * (height / 2));
-
       endShape();
     }
-    // console.log("bass:" + bass);
     var highmid = fft.getEnergy('highMid');
     if(highmid < 200){
       stroke(1);
       fill('red');
       beginShape();
-      ellipse(50, 50, highmid/200 * (height / 2), highmid/200 * (height / 2));
+      ellipse(50, 50, highmid/250 * (height / 2), highmid/250 * (height / 2));
+      endShape();
 
+      beginShape();
+      ellipse(650, 50, highmid/250 * (height / 2), highmid/250 * (height / 2));
       endShape();
     }
     // console.log("highmid:" + highmid);
     var treble = fft.getEnergy('treble');
+    if(treble < 200){
+      stroke(1);
+      fill('blue');
+      beginShape();
+      ellipse(250, 50, treble/250 * (height / 2), treble/250 * (height / 2));
+      endShape();
+
+      beginShape();
+      ellipse(450, 50, treble/250 * (height / 2), treble/250 * (height / 2));
+      endShape();
+    }
     // console.log("treble:" + treble);
 }
